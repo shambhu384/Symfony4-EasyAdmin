@@ -12,17 +12,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\GenusRepository;
 
 class GenusController extends Controller
 {
     /**
      * @Route("/genus/feed", name="genus_feed")
      */
-    public function feedAction(Request $request)
+    public function feedAction(Request $request, GenusRepository $genusRepository)
     {
         $em = $this->getDoctrine()->getManager();
         $id = $request->query->get('id');
-        $genus = $em->getRepository('AppBundle:Genus')->find($id);
+        $genus = $genusRepository->find($id);
 
         $menu = ['shrimp', 'clams', 'lobsters', 'dolphin'];
         $meal = $menu[random_int(0, 3)];
@@ -43,7 +44,7 @@ class GenusController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $subFamily = $em->getRepository('AppBundle:SubFamily')
+        $subFamily = $em->getRepository('SubFamily')
             ->findAny();
 
         $genus = new Genus();
@@ -82,12 +83,10 @@ class GenusController extends Controller
     /**
      * @Route("/genus")
      */
-    public function listAction()
+    public function listAction(GenusRepository $genusRepository)
     {
-        $em = $this->getDoctrine()->getManager();
 
-        $genuses = $em->getRepository('AppBundle:Genus')
-            ->findAllPublishedOrderedByRecentlyActive();
+        $genuses = $genusRepository->findAllPublishedOrderedByRecentlyActive();
 
         return $this->render('genus/list.html.twig', [
             'genuses' => $genuses

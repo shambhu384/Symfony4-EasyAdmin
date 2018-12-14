@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\GenusRepository;
+use App\Repository\GenusScientistRepository;
 
 class GenusController extends Controller
 {
@@ -60,7 +61,7 @@ class GenusController extends Controller
         $genusNote->setCreatedAt(new \DateTime('-1 month'));
         $genusNote->setGenus($genus);
 
-        $user = $em->getRepository('AppBundle:User')
+        $user = $em->getRepository('App:User')
             ->findOneBy(['email' => 'aquanaut1@example.org']);
 
         $genusScientist = new GenusScientist();
@@ -105,7 +106,7 @@ class GenusController extends Controller
         $this->get('logger')
             ->info('Showing genus: '.$genus->getName());
 
-        $recentNotes = $em->getRepository('AppBundle:GenusNote')
+        $recentNotes = $em->getRepository('App:GenusNote')
             ->findAllRecentNotesForGenus($genus);
 
         $foodArray = ['shrimp', 'clams', 'lobsters', 'shark'];
@@ -153,7 +154,7 @@ class GenusController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $genusScientist = $em->getRepository('AppBundle:GenusScientist')
+        $genusScientist = $em->getRepository('App:GenusScientist')
             ->findOneBy([
                 'user' => $userId,
                 'genus' => $genusId

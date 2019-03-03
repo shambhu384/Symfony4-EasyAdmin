@@ -10,7 +10,6 @@ easy_admin:
         templates:
             field_id: 'admin/fields/_id.html.twig'
         form_theme:
-            - horizontal
             - easy_admin/_form_theme.html.twig
         menu:
             - { label: 'Dashboard', route: 'admin_dashboard', default: true }
@@ -157,7 +156,7 @@ easy_admin:
                     - id
                     - { property: 'email', type: 'email' }
                     - { property: 'isScientist', label: 'Is scientist?', type: 'boolean' }
-                    - { property: 'fullName', template: '_field_user_full_name.html.twig' }
+                    - { property: 'fullName', template: 'easy_admin/_field_user_full_name.html.twig' }
                     - { property: 'avatarUri', type: 'url' }
             form:
                 fields:

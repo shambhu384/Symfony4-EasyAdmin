@@ -3,11 +3,17 @@
 namespace App\Repository;
 
 use App\Entity\Genus;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Collections\Criteria;
 
-class GenusRepository extends EntityRepository
+class GenusRepository extends ServiceEntityRepository
 {
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Genus::class);
+    }
     /**
      * @return Genus[]
      */

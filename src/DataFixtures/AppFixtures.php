@@ -10,5 +10,8 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+
+         $manager->persist($user);
+         $manager->flush();
     }
 }
